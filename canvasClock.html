@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#textWrapper {
+margin-left:313px;
+margin-top:-252px;
+
+
+}
+</style>
+</head>
+<body style="background-color: #4747d1;"> 
+<p style="font-size:28px;" >This is <sup>My Canvas</sup> Get your time.! </p>
+
+
+<canvas id="canvas" width="300" height="300" style="background-color:#ff6600"></canvas>
+<div id="textWrapper">
+<p>In my eyes you are my sight. </p>
+
+<pre>
+   The flashes of the evening
+
+   they are so beautiful,
+
+   but they can not be compared
+   
+   with the brightness of your eyes 
+   
+   every minutes that passes by 
+   
+   I just need to be by your side. 
+</pre>
+
+</div>
+
+
+<script>
+var canvas = document.getElementById("canvas");
+var radius = canvas.height / 2;
+var contx = canvas.getContext("2d");
+contx.translate(radius, radius);
+radius = radius * 0.90
+makeClock();
+
+//making the clock
+
+function makeClock() {
+    contx.arc(0, 0, radius, 0 , 4*Math.PI);
+    contx.fillStyle = "white";
+    contx.fill();
+}
+
+function makeClock() {
+    makeFace(contx, radius);
+} 
+
+// making the clocks face
+
+function makeFace(contx, radius) {
+    var grad;
+
+    contx.beginPath();
+    contx.arc(0, 0, radius, 0, 4*Math.PI);
+    contx.fillStyle = 'white';
+    contx.fill();
+
+    grad = contx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+    grad.addColorStop(0, ' #b3b300');
+    grad.addColorStop(0.5, 'white');
+    grad.addColorStop(1, ' #b3b300');
+    contx.strokeStyle = grad;
+    contx.lineWidth = radius*0.1;
+    contx.stroke();
+
+    contx.beginPath();
+    contx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+    contx.fillStyle = ' #b3b300';
+    contx.fill();
+} 
+
+// making the clock
+function makeClock() {
+    makeFace(contx, radius);
+    makeNumbers(contx, radius);
+} 
+// making the numbers in the clock
+
+function makeNumbers(contx, radius) {
+    var ang;
+    var num;
+    contx.font = radius*0.15 + "px arial";
+    contx.textBaseline="middle";
+    contx.textAlign="center";
+    for(num= 1; num < 13; num++){
+        ang = num * Math.PI / 6;
+        contx.rotate(ang);
+        contx.translate(0, -radius*0.85);
+        contx.rotate(-ang);
+        contx.fillText(num.toString(), 0, 0);
+        contx.rotate(ang);
+        contx.translate(0, radius*0.85);
+        contx.rotate(-ang);
+    }
+}
+// making the clock
+
+function makeClock() {
+    makeFace(contx, radius);
+    makeNumbers(contx, radius);
+    makeTime(contx, radius);
+}
+// making (updating) the time 
+function makeTime(contx, radius){
+    var now = new Date(); // method to get upto-date
+    var hour = now.getHours(); // get the hour 
+    var minute = now.getMinutes();// get the minutes
+    var second = now.getSeconds(); // get the seconds
+    // hour
+    hour=hour%12;
+    hour=(hour*Math.PI/6)+(minute*Math.PI/(6*60))+(second*Math.PI/(360*60));
+    makeHand(contx, hour, radius*0.5, radius*0.07);
+    // minutes
+    minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+    makeHand(contx, minute, radius*0.8, radius*0.07);
+    // seconds
+    second=(second*Math.PI/30);
+    makeHand(contx, second, radius*0.9, radius*0.02);
+}
+// making the clock's hands.
+function makeHand(contx, pos, length, width) {
+    contx.beginPath();
+    contx.lineWidth = width;
+    contx.lineCap = "round";
+    contx.moveTo(0,0);
+    contx.rotate(pos);
+    contx.lineTo(0, -length);
+    contx.stroke();
+    contx.rotate(-pos);
+}
+
+
+
+</script>
+
+
+
+</body>
+</html>
